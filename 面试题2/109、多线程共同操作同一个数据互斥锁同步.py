@@ -1,0 +1,24 @@
+# _*_ encoding=utf-8 _*_
+# author zdh
+# date 2021/4/24--10:41
+import threading
+import time
+
+class MyThread(threading.Thread):
+    def run(self):
+        global num
+        time.sleep(1)
+
+        if mutex.acquire(1):
+            num +=1
+            msg = self.name + 'set num to ' +str(num)
+            print(msg)
+            mutex.release()
+num = 0
+mutex = threading.Lock()
+def test():
+    for i in range(5):
+        t = MyThread()
+        t.start()
+if __name__ == '__main__':
+    test()
